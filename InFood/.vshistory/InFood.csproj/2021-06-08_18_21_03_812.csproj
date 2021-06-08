@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,11 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Klasy\NewFile1.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interfejsy\" />
+    <Folder Include="Classes\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>

@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Klasy\NewFile1.txt" />
+    <None Remove="Classes\NewFile1.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfejsy\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>
