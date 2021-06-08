@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InFood.Classes
+namespace InFood.Klasy.BusinessLogic
 {
     class Rola
     {
@@ -39,6 +39,11 @@ namespace InFood.Classes
         }
 
         public void ModyfikujRole()
+        {
+            
+        }
+
+        public void Uzytkownicy()
         {
 
         }

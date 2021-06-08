@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InFood.Classes
+namespace InFood.Klasy.BusinessLogic
 {
     public class Użytkownik
     {

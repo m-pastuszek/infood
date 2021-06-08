@@ -9,8 +9,4 @@
     <None Remove="Klasy\NewFile1.txt" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfejsy\" />
-  </ItemGroup>
-
 </Project>
