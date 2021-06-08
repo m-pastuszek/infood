@@ -15,7 +15,7 @@ namespace InFood.Klasy.BusinessLogic
         private int m_iIdRoli;
 
         [DataMember]
-        public int ID
+        public int Id
         {
             get => m_iId;
             set => m_iId = value;
@@ -62,21 +62,26 @@ namespace InFood.Klasy.BusinessLogic
 
         }
 
-        public void ModyfikujUzytkownika(int ID)
+        public void ModyfikujUzytkownika(int Id)
         {
             
         }
 
-        public void UsunUzytkownika(int ID)
+        public void UsunUzytkownika(int Id)
         {
 
         }
 
-        public void Rola(int ID)
+        public void Rola(int Id)
         {
-            int IdUzytkownika = this.ID;
+            int IdUzytkownika = this.Id;
 
 
+        }
+
+        public override string ToString()
+        {
+            return $"[Login={Login}|Password={Haslo}|Rola={IdRoli}]";
         }
 
 

@@ -28,5 +28,17 @@ namespace InFood.Klasy
                 return FromXml(new MemoryStream(_oByteBuffer));
             }
         }
+
+        public virtual bool GetXMLData(string a_sFileName)
+        {
+            using (var _file = new StreamReader(a_sFileName))
+            {
+                var _sStrBuff = _file.ReadToEnd();
+
+                var _oByteBuffer = Encoding.UTF8.GetBytes(_sStrBuff);
+
+                return FromXml(new MemoryStream(_oByteBuffer));
+            }
+        }
     }
 }
