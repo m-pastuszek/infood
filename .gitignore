@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/InFood/Klasy/.vshistory
+/InFood/.vshistory/InFood.csproj
+/InFood/.vshistory/XmlStorage.cs
