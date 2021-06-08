@@ -1,9 +1,13 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text;
+using InFood.Klasy;
 
 namespace InFood.Klasy.BusinessLogic
 {
     [DataContract]
-    public class Użytkownik : FileXmlStorage<>
+    public class Uzytkownik : FileXmlStorage<Uzytkownik>
     {
         private int m_iId;
         private string m_sLogin;
@@ -38,16 +42,24 @@ namespace InFood.Klasy.BusinessLogic
             set => m_iIdRoli = value;
         }
 
-        public void Uzytkownik()
+        public static void DodajUzytkownika(string Login, string Haslo, int Rola)
         {
+            Uzytkownik _oUzytkownik = new Uzytkownik
+            {
+                Login = Login,
+                Haslo = Haslo,
+                IdRoli = Rola
+            };
 
-        }
+            try
+            {
+                _oUzytkownik.ExportToFile("users.xml");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
-        public void DodajUzytkownika(string Login, string Haslo, int Rola)
-        {
-            this.Login = m_sLogin;
-            this.Haslo = m_sHaslo;
-            this.IdRoli = m_iIdRoli;
         }
 
         public void ModyfikujUzytkownika(int ID)

@@ -6,7 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Klasy\BusinessLogic\NewFile1.txt" />
     <None Remove="Klasy\NewFile1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
 </Project>

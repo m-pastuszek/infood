@@ -3,6 +3,7 @@ using System.IO;
 using InFood.Klasy;
 using InFood.Klasy.BusinessLogic;
 using InFood.Klasy.System;
+using InFood.Klasy.Database;
 
 namespace InFood
 {
@@ -18,10 +19,28 @@ namespace InFood
 
             XmlStorageTypes.Initialize();
 
-            Uzytkownik _oUzytkownik = new Uzytkownik
-            {
+            /*Uzytkownik.DodajUzytkownika("test", "123qwe", 1);*/
 
+            SqlDatabase.PodlaczBaze();
+           
+            /*
+
+            User _oUser = new User();
+            try
+            {
+                if (_oUser.ImportFromFile("user.xml"))
+                {
+                    Console.WriteLine(_oUser);
+                }
+                else
+                {
+                    Console.WriteLine("Coś nie pykło...");
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }*/
         }
     }
 }
