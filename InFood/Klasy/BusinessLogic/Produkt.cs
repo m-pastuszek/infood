@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace InFood.Klasy.BusinessLogic
 {
+    [DataContract]
     class Produkt
     {
         private int m_iId;
@@ -14,31 +16,35 @@ namespace InFood.Klasy.BusinessLogic
         private float m_fWaga;
         private DateTime m_dtTerminWaznosci;
        
-
+        [DataMember]
         public int ID
         {
             get => m_iId;
             set => m_iId = value;
         }
 
+        [DataMember]
         public string Nazwa
         {
             get => m_sNazwa;
             set => m_sNazwa = value;
         }
 
+        [DataMember]
         public int Ilosc
         {
             get => m_iIlosc;
             set => m_iIlosc = value;
         }
 
+        [DataMember]
         public float Waga
         {
             get => m_fWaga;
             set => m_fWaga = value;
         }
 
+        [DataMember]
         public DateTime TerminWaznosci
         {
             get => m_dtTerminWaznosci;

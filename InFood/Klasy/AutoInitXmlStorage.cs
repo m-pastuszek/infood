@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace InFood.Classes
+namespace InFood.Klasy
 {
     [DataContract]
     public class AutoInitXmlStorage<T> : XmlStorage<T> where T : class

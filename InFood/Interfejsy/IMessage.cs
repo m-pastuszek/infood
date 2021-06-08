@@ -7,6 +7,6 @@ namespace InFood.Interfejsy
         IMessage ProcessRequest(StateObject a_oStateObject = null);
         IMessage ProcessResponse(StateObject a_oStateObject = null);
 
-        NetworkData AsNetworkData(int a_iDataSize = NetworkService.BUFFER_SIZE);
+   //     NetworkData AsNetworkData(int a_iDataSize = NetworkService.BUFFER_SIZE);
     }
 }

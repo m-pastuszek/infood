@@ -1,35 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace InFood.Klasy.BusinessLogic
 {
-    public class Użytkownik
+    [DataContract]
+    public class Użytkownik : FileXmlStorage<>
     {
         private int m_iId;
         private string m_sLogin;
         private string m_sHaslo;
         private int m_iIdRoli;
 
+        [DataMember]
         public int ID
         {
             get => m_iId;
             set => m_iId = value;
         }
 
+        [DataMember]
         public string Login
         {
             get => m_sLogin;
             set => m_sLogin = value;
         }
+
+        [DataMember]
         public string Haslo
         {
             get => m_sHaslo;
             set => m_sHaslo = value;
         }
 
+        [DataMember]
         public int IdRoli
         {
             get => m_iIdRoli;
