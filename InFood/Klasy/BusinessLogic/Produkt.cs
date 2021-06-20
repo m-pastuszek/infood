@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using InFood.Klasy.Database;
+using InFood.Klasy.Toolbox;
 
 namespace InFood.Klasy.BusinessLogic
 {
@@ -10,7 +11,7 @@ namespace InFood.Klasy.BusinessLogic
         private int m_iId;
         private string m_sNazwa;
         private int m_iIlosc;
-        private float m_fWaga;
+        private decimal m_dWaga;
         private DateTime m_dtTerminWaznosci;
        
         public int ID
@@ -31,10 +32,10 @@ namespace InFood.Klasy.BusinessLogic
             set => m_iIlosc = value;
         }
 
-        public float Waga
+        public decimal Waga
         {
-            get => m_fWaga;
-            set => m_fWaga = value;
+            get => m_dWaga;
+            set => m_dWaga = value;
         }
 
         public DateTime TerminWaznosci
@@ -46,6 +47,83 @@ namespace InFood.Klasy.BusinessLogic
         public Produkt()
         {
             
+        }
+
+        public static void DodajProduktDoSkrytki(Skrytka o_Skrytka)
+        {
+            int? productId = DodajProdukt();
+            int userId = Uzytkownik.IdUzytkownikaOPodanymLoginie(InFood.Program.LOGGED_USER_LOGIN);
+
+            string queryString = "UPDATE dbo.Skrytka SET IdProduktu = @IdProduktu, IdUzytkownika = @IdUzytkownika, CzyZajeta = 1 WHERE ID = @ID;";
+
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("@IdProduktu", productId);
+            parameters.Add("@IdUzytkownika", userId);
+            parameters.Add("@ID", o_Skrytka.ID);
+
+            DatabaseOperations.Update(queryString, parameters);
+        }
+
+        public static void UsunProduktZeSkrytki(Skrytka o_Skrytka)
+        {
+            UsunProdukt(o_Skrytka.IdProduktu);
+
+            string queryString = "UPDATE dbo.Skrytka SET IdProduktu = NULL, IdUzytkownika = NULL, CzyZajeta = 0 WHERE ID = @IdSkrytki";
+
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("@IdSkrytki", o_Skrytka.ID);
+
+            DatabaseOperations.Update(queryString, parameters);
+        }
+
+        public static int? DodajProdukt()
+        {
+            string s_Nazwa = Fields.PoleTekstowe("Nazwa produktu");
+            int i_Ilosc = (int)Fields.PoleLiczbowe("Ilość sztuk produktu");
+            decimal d_Waga = (decimal)Fields.PoleWaga("Waga sztuki produktu");
+
+            string s_TerminWaznosci = WprowadzDateWaznosci();
+
+            DateTime dt_TerminWaznosci;
+
+            while(!DateTime.TryParse(s_TerminWaznosci, out dt_TerminWaznosci))
+            {
+                Console.WriteLine("Wprowadzono nieprawidłową datę ważności. Spróbuj jeszcze raz.");
+                s_TerminWaznosci = WprowadzDateWaznosci();
+
+            }
+
+            AddProductToDatabase(s_Nazwa, i_Ilosc, d_Waga, dt_TerminWaznosci);
+
+            return DatabaseOperations.LAST_INSERTED_ID;
+        }
+
+        public static void UsunProdukt(int? ID)
+        {
+            Console.Write("Czy na pewno chcesz wyjąć ten produkt? (T/N): ");
+
+            switch (Console.ReadLine())
+            {
+                case "T":
+                    DeleteProductFromDatabase(ID);
+                    break;
+
+                case "N":
+                    break;
+            }
+        }
+
+        private static string WprowadzDateWaznosci()
+        {
+            Console.WriteLine("| Termin ważności produktu: ");
+
+            int i_Dzien = (int)Fields.PoleLiczbowe(" -> Dzień");
+            int i_Miesiac = (int)Fields.PoleLiczbowe(" -> Miesiąc");
+            int i_Rok = (int)Fields.PoleLiczbowe(" -> Rok");
+
+            string s_TerminWaznosci = $"{i_Rok}-{i_Miesiac}-{i_Dzien}";
+
+            return s_TerminWaznosci;
         }
 
         /*
@@ -61,20 +139,18 @@ namespace InFood.Klasy.BusinessLogic
 
             foreach (DataRow row in dt.Rows) // przejechanie po wierszach
             {
-                // dodanie użytkownika z bazy do listy
+                // dodanie produktu z bazy do listy
                 productsList.Add(
                     new Produkt()
                     {
                         ID = row.Field<int>("ID"),
                         Nazwa = row.Field<string>("Nazwa"),
                         Ilosc = row.Field<int>("Ilosc"),
-                        Waga = row.Field<float>("Waga"),
+                        Waga = row.Field<decimal>("Waga"),
                         TerminWaznosci = row.Field<DateTime>("TerminWaznosci")
                     });
             }
         }
-
-        // TODO: PRODUKT NIESKOŃCZONY...
 
         /*
          * Pobranie danych o użytkowniku z bazy danych
@@ -82,101 +158,63 @@ namespace InFood.Klasy.BusinessLogic
          */
         public static void GetProductFromDatabase(string ID)
         {
-            string queryString = "SELECT * FROM dbo.Uzytkownik WHERE Login = @Login;"; // zapytanie SQL
+            string queryString = "SELECT * FROM dbo.Produkt WHERE ID = @ID;"; // zapytanie SQL
 
-            var parameters = new Dictionary<string, string>();
-            parameters.Add("@Login", Login);
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("@ID", ID);
 
             DataTable dt = DatabaseOperations.SelectWithParams(queryString, parameters); // zapytanie SQL i zapisanie odpowiedzi do lokalnej tabeli
 
-            List<Uzytkownik> usersList = new List<Uzytkownik>(); // utworzenie listy użytkowników
+            List<Produkt> productsList = new List<Produkt>(); // utworzenie listy produktów
 
             foreach (DataRow row in dt.Rows) // przejechanie po wierszach
             {
-                // dodanie użytkownika z bazy do listy
-                usersList.Add(
-                    new Uzytkownik()
+                // dodanie produktu z bazy do listy
+                productsList.Add(
+                    new Produkt()
                     {
-                        Id = row.Field<int>("ID"),
-                        Login = row.Field<string>("Login"),
-                        Haslo = row.Field<string>("Haslo"),
-                        IdRoli = row.Field<int>("IdRoli")
+                        ID = row.Field<int>("ID"),
+                        Nazwa = row.Field<string>("Nazwa"),
+                        Ilosc = row.Field<int>("Ilosc"),
+                        Waga = row.Field<decimal>("Waga"),
+                        TerminWaznosci = row.Field<DateTime>("TerminWaznosci")
                     });
             }
         }
 
         /*
-         * Dodanie użytkownika do bazy danych
+         * Dodanie produktu do bazy danych
          */
-        public static void AddUserToDatabase(string Login, string Haslo, int IdRoli)
+        public static void AddProductToDatabase(string Nazwa, int Ilosc, decimal Waga, DateTime TerminWaznosci)
         {
-            string queryString = "INSERT INTO dbo.Uzytkownik (Login, Haslo, IdRoli) VALUES (@Login,@Haslo,@IdRoli);"; // zapytanie SQL
+            string queryString = "INSERT INTO dbo.Produkt (Nazwa, Ilosc, Waga, TerminWaznosci) VALUES (@Nazwa,@Ilosc,@Waga,@TerminWaznosci);"; // zapytanie SQL
 
             var parameters = new Dictionary<string, object>();
 
-            parameters.Add("@Login", Login);
-            parameters.Add("@Haslo", Haslo);
-            parameters.Add("@IdRoli", IdRoli);
+            parameters.Add("@Nazwa", Nazwa);
+            parameters.Add("@Ilosc", Ilosc);
+            parameters.Add("@Waga", Waga);
+            parameters.Add("@TerminWaznosci", TerminWaznosci);
 
-            DatabaseOperations.Insert(queryString, parameters); // wykonanie polecenia SQL        
+            DatabaseOperations.Insert(queryString, parameters); // wykonanie polecenia SQL i zwrócienie jego ID
+
+            int? i_IdDodanegoProduktu = DatabaseOperations.LAST_INSERTED_ID; // wykonanie polecenia SQL
+
+            Console.WriteLine($"ID dodanego produktu: {i_IdDodanegoProduktu}");
         }
 
         /*
-         * Usunięcie użytkownika z bazy danych
+         * Usunięcie produktu z bazy danych
          */
-        public static void DeleteUserFromDatabase(string Login)
+        public static void DeleteProductFromDatabase(int? ID)
         {
-            string queryString = "DELETE FROM dbo.Uzytkownik WHERE Login=@Login"; // zapytanie SQL
+            string queryString = "DELETE FROM dbo.Produkt WHERE ID=@ID"; // zapytanie SQL
 
             var parameters = new Dictionary<string, object>();
 
-            parameters.Add("@Login", Login);
+            parameters.Add("@ID", ID);
 
             DatabaseOperations.Delete(queryString, parameters); // wykonanie polecenia SQL
-        }
-
-        /*
-         * Update użytkownika w bazie
-         * 
-         * Parametry:
-         * Login - login użytkownika, którego dotyczy zmiana
-         * Case - tryb zmiany (1 - tylko login, 2 - tylko hasło, 3 - obie rzeczy)
-         * editedParams - aktualizowane zmiany
-         */
-
-        public static void UpdateUserInDatabase(string Login, int Case, Dictionary<string, object> editedParams)
-        {
-            string queryString;
-
-            var parameters = new Dictionary<string, object>();
-
-            parameters.Add("@Login", Login);
-
-            foreach (KeyValuePair<string, object> param in editedParams)
-            {
-                if (Case == 1)
-                {
-                    queryString = "UPDATE dbo.Uzytkownik SET Login = @LoginChanged WHERE Login = @Login;"; // zapytanie SQL
-                    parameters.Add("@LoginChanged", editedParams["@LoginChanged"]);
-
-                    DatabaseOperations.Insert(queryString, parameters);
-                }
-                if (Case == 2)
-                {
-                    queryString = "UPDATE dbo.Uzytkownik SET Haslo = @HasloChanged WHERE Login = @Login;"; // zapytanie SQL
-                    parameters.Add("@HasloChanged", editedParams["@HasloChanged"]);
-
-                    DatabaseOperations.Insert(queryString, parameters);
-                }
-                if (Case == 3)
-                {
-                    queryString = "UPDATE dbo.Uzytkownik SET Login = @LoginChanged, Haslo = @HasloChanged WHERE Login = @Login;"; // zapytanie SQL
-                    parameters.Add("@LoginChanged", editedParams["@LoginChanged"]);
-                    parameters.Add("@HasloChanged", editedParams["@HasloChanged"]);
-
-                    DatabaseOperations.Insert(queryString, parameters);
-                }
-            }
         }
     }
 }

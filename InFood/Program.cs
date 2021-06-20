@@ -1,258 +1,318 @@
 ﻿using System;
-using System.IO;
 using InFood.Klasy;
 using InFood.Klasy.BusinessLogic;
-using InFood.Klasy.System;
-using InFood.Klasy.Database;
-using System.Collections.Generic;
+using InFood.Klasy.Toolbox;
+using InFood.Klasy.Menu;
+using System.Text;
 
 namespace InFood
 {
     class Program
     {
+        public static string LOGGED_USER_LOGIN;
         static void Main(string[] args)
         {
-            Log.CurrentLevel = Log.LevelEnum.DEB;
+            Console.OutputEncoding = Encoding.UTF8;
+            EntryMenu();
 
-            using var _log = Log.DEB("Program", "Main");
-
-            _log.PR_DEB("to jest początek aplikacji");
-            Uzytkownik.AddUserToDatabase("test123", "pass123", 1);
-
-            /*          Dictionary<string, object> changedData = new Dictionary<string, object>();
-                      changedData.Add("@HasloChanged", "testChanged");
-
-                      Uzytkownik.DeleteUserFromDatabase("testChanged");*/
-
-            Console.ReadLine();
-
-            private static bool MainMenu()
-            {
-                Console.Clear();
-                Console.WriteLine("1) Zaloguj sie");
-                Console.WriteLine("2) Zarejestruj sie");
-                Console.WriteLine("3) Wyjscie z aplikacji");
-
-                switch (Console.ReadLine())
-                {
-                    case 1:
-                        if (nazwa uzytkownika jest w bazie)
-                        {
-                Console.WriteLine("Zalogowano");
-                switch to LoginMenu
-                        }
-                        else
-                break:
-            {
-                Console.WriteLine("Nieprawidlowa nazwa uzytkownika");
-                break;
-                switch to MainMenu;
-           
-                    case 2:
-                Console.WriteLine("Podaj login uzytkownika");
-                Console.ReadLine(nazwa uzytkownika);
-                Console.WriteLine("Podaj haslo uzytkownika");
-                Console.ReadLine(haslo uzytkownika);
-                Console.WriteLine("Uzytkownik dodany";
-                switch to MainMenu;
-                break;
-                    case 3:
-                        public static void Exit();
-            default:
-                     Console.WriteLine("Zly wybor. Prosze wybrac 1, 2, or 3.");
-            break;
         }
-    }
-
-    private static bool LoginMenu)
-            {
-                Console.Clear();
-                Console.WriteLine("1) Wybierz lokalizację");
-                Console.WriteLine("2) Wyświetl historię produktów");
-                Console.WriteLine("3) Zarzadzaj kontem");
-                Console.WriteLine("4) Wyjscie z aplikacji");
-
-                switch (Console.ReadLine())
-                {
-                    case 1:
-                        if (odebrane produkty = jakaś wartość) or(oddane produkty = jakas wartosc)
-    {
-        if
-            {
-            (odebrane produkty = jakas wartosc)
-                            Console.WriteLine(odebrane produkty);
-        }
-        else
+        // MENU PODCZAS URUCHOMIENIA APLIKACJI
+        public static void EntryMenu()
         {
-            Console WriteLine(oddane produkty);
+            Console.Clear();
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                             MENU GŁÓWNE                                |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("| Wybierz opcję:                                                         |");
+            Console.WriteLine("|                                                                        |");
+            Console.WriteLine("| 1) Zaloguj się                                                         |");
+            Console.WriteLine("| 2) Zarejestruj się                                                     |");
+            Console.WriteLine("| 3) Wyjście z aplikacji                                                 |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("| Wybierz opcję i zatwierdź klawiszem ENTER.                             |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.Write("| Wybór: ");
 
-        }
-                        else
-        {
-            Console.Writeline("uzytkownik nie posiada odebranych ani oddanych produktow")
-                    switch to LoginMenu;
-                    case 2:
-                       if (dostepne skrytki = jakaś wartość)
-                        {
-                Console.WriteLine("dostepne skrytki");
-                switch to SkrytkiMenu
-                        }
-                        else
-            {
-                Console.Writeline("zadne skrytki nie sa dostepne");
-                break;
-                    case 3:
-                    switch to KontoMenu
-                    case 4:
-                        public static void Exit();
-            default:
-                        Console.WriteLine("Zly wybor. Prosze wybrac 1, 2, or 3.");
-            break;
-        }
-    }
-    private static bool Kontomenu)
-            {
-        Console.Clear();
-        Console.WriteLine("1) Zmien login");
-        Console.WriteLine("2) Zmien haslo");
-        Console.WriteLine("3) Powrot do menu uzytkownika);
-        Console.WriteLine("4)Wyjscie z aplikacji);
-        switch (Console.ReadLine())
-        {
-        case 1:
-        Console.WriteLine("Podaj nowe haslo");
-        Console.ReadLine(NOWE HASLO);
-        Console.WriteLine("haslo zmienione pomyslnie);
-        break;
-        case 2
- private static bool LokalizacjaMenu)
-            {
-    Console.Clear();
-    Console.WriteLine("Wybierz skrytke");
-    Console.WriteLine("1) Grunwald");
-    Console.WriteLine("2) Nowe Miasto");
-    Console.WriteLine("3) Jeżyce");
-    Console.WriteLine("4) Stare Miasto");
-    Console.WriteLine("5) Wilda");
-    Console.WriteLine("6) Powrot do menu uzytkowika");
-    Console.WriteLine("7) Wyjscie z aplikacji");
-    switch (Console.ReadLine())
-    {
-        case "1":
-            Console.WriteLine("W skrytce Grunwald znajduje sie"  GRUNWALD ILOSC  "miejsc");
-            Console.WriteLine("1) Dodaj produkt do skrytki");
-            Console.WriteLine("2) Usun produkt ze skrytki");
-            Console.WriteLine("3) Powrot do wyboru lokalizacji");
-            Console.WriteLine("4) Wyjscie z aplikacji");
             switch (Console.ReadLine())
             {
-                case 1:
-                    Console.WriteLine("Dodano jedzenie do skrytki")
-            int GRUNWALD ILOSC + 1;
+                case "1":
+                    LoginMenu();
                     break;
-                case 2:
-                    Console.WriteLine("Usunieto jedzenie ze skrytki")
-            int GRUNWALD ILOSC - 1;
+                case "2":
+                    RegisterMenu();
                     break;
-                case 3:
-                    switch to LokalizacjaMenu();
+                case "3":
+                    Environment.Exit(0);
                     break;
-                case 4:
-                    public static void Exit();
+                default:
+                    HelperClasses.ZlyWybor();
+                    EntryMenu();
                     break;
             }
-                case 2:
-                    Console.WriteLine("W skrytce Nowe Miasto znajduje sie"  Nowe Miasto ILOSC  "miejsc");
-                    Console.WriteLine("1) Dodaj produkt do skrytki");
-                    Console.WriteLine("2) Usun produkt ze skrytki");
-                    Console.WriteLine("3) Powrot do wyboru lokalizacji");
-                    Console.WriteLine("4) Wyjscie z aplikacji");
-switch (Console.ReadLine())
-{
-    case 1:
-        Console.WriteLine("Dodano jedzenie do skrytki")
-                   int Nowe Miasto ILOSC +1;
-        break;
-    case 2:
-        Console.WriteLine("Usunieto jedzenie ze skrytki")
-                   int Nowe Miasto ILOSC -1;
-        break;
-    case 3:
-        switch to LokalizacjaMenu();
-        break;
-    case 4:
-        public static void Exit();
-        break;
-}
-                        case 3:
-                            Console.WriteLine("W skrytce Jeżyce znajduje sie"  Jeżyce ILOSC  "miejsc");
-                            Console.WriteLine("1) Dodaj produkt do skrytki");
-                            Console.WriteLine("2) Usun produkt ze skrytki");
-                            Console.WriteLine("3) Powrot do wyboru lokalizacji");
-                            Console.WriteLine("4) Wyjscie z aplikacji");
-switch (Console.ReadLine())
-{
-    case 1:
-        Console.WriteLine("Dodano jedzenie do skrytki")
-                           int Jeżyce ILOSC + 1;
-        break;
-    case 2:
-        Console.WriteLine("Usunieto jedzenie ze skrytki")
-                           int Jeżyce ILOSC - 1;
-        break;
-    case 3:
-        switch to LokalizacjaMenu();
-        break;
-    case 4:
-        public static void Exit();
-        break;
-}
+        }
 
-                                case 4:
-                                    Console.WriteLine("W skrytce Stare Miasto znajduje sie"  Stare Miasto ILOSC  "miejsc");
-                                    Console.WriteLine("1) Dodaj produkt do skrytki");
-                                    Console.WriteLine("2) Usun produkt ze skrytki");
-                                    Console.WriteLine("3) Powrot do wyboru lokalizacji");
-                                    Console.WriteLine("4) Wyjscie z aplikacji");
-switch (Console.ReadLine())
-{
-    case 1:
-        Console.WriteLine("Dodano jedzenie do skrytki")
-                                   int Stare Miasto ILOSC +1;
-        break;
-    case 2:
-        Console.WriteLine("Usunieto jedzenie ze skrytki")
-                                   int Stare Miasto ILOSC -1;
-        break;
-    case 3:
-        switch to LokalizacjaMenu();
-        break;
-    case 4:
-        public static void Exit();
-        break;
-}
-                                        case 5:
-                                            Console.WriteLine("W skrytce Wilda znajduje sie"  Wilda ILOSC  "miejsc");
-                                            Console.WriteLine("1) Dodaj produkt do skrytki");
-                                            Console.WriteLine("2) Usun produkt ze skrytki");
-                                            Console.WriteLine("3) Powrot do wyboru lokalizacji");
-                                            Console.WriteLine("4) Wyjscie z aplikacji");
-                                            switch (Console.ReadLine())
-                                            {
-                                                case 1:
-                                                    Console.WriteLine("Dodano jedzenie do skrytki")
-                                           int Wilda ILOSC + 1;
-                                                    break;
-                                                case 2:
-                                                    Console.WriteLine("Usunieto jedzenie ze skrytki")
-                                           int Wilda ILOSC - 1;
-                                                    break;
-                                                case 3:
-                                                    switch to LokalizacjaMenu();
-                                                    break;
-                                                case 4":
-                                                    public static void Exit();
-                                                    break;
-                                            }
-                                    }
+        // MENU LOGOWANIA
+        private static void LoginMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                               LOGOWANIE                                |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+
+            string s_Login = Fields.PoleTekstowe("Podaj login");
+            string s_Haslo = Fields.PoleTekstowe("Podaj hasło");
+
+            while (!Uzytkownik.CzyPoprawneDaneLogowania(s_Login, s_Haslo))
+            {
+                Console.WriteLine("+------------------------------------------------------------------------+");
+                Console.WriteLine("| Wprowadzono nieprawidłowe dane logowania. Spróbuj ponownie.            |");
+                Console.WriteLine("+------------------------------------------------------------------------+");
+                Console.ReadKey();
+                LoginMenu();
+            }
+
+            if (Uzytkownik.CzyUzytkownikJestAdminem(s_Login))
+                AdminUserMenu();
+            else
+                NormalUserMenu();
+        }
+
+        // MENU REJESTRACJI
+        private static void RegisterMenu()
+        {
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                             REJESTRACJA                                |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+
+            Uzytkownik.DodajUzytkownika();
+        }
+
+        // MENU NORMALNEGO UŻYTKOWNIKA (Z ROLĄ 1)
+        private static void NormalUserMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                           MENU UŻYTKOWNIKA                             |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("| Wybierz opcję:                                                         |");
+            Console.WriteLine("|                                                                        |");
+            Console.WriteLine("| 1) Wybierz lokalizację                                                 |");
+            Console.WriteLine("| 2) Zarzadzaj kontem                                                    |");
+            Console.WriteLine("| 3) Wyjście z aplikacji                                                 |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.Write("| Wybór: ");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    Lokalizacja o_WybranaLokalizacja = Lokalizacja.WybierzLokalizacje();
+
+                    if (o_WybranaLokalizacja != null)
+                    {
+                        GiveOrGetProductMenu(o_WybranaLokalizacja);
+                    }
+                    break;
+                case "2":
+                    UserSettings();
+                    break;
+                case "3":
+                    Environment.Exit(0);
+                    break;
+                default:
+                    HelperClasses.ZlyWybor();
+                    NormalUserMenu();
+                    break;
+            }
+        }
+
+        // MENU ADMINISTRATORA
+        private static void AdminUserMenu()
+        {
+            // TODO
+        }
+
+        // MENU AKCJI W WYBRANEJ LOKALIZACJI
+        private static void GiveOrGetProductMenu(Lokalizacja o_Lokalizacja)
+        {
+            Console.Clear();
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine($"LOKALIZACJA: {o_Lokalizacja.Nazwa}");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("| Wybierz opcję:                                                         |");
+            Console.WriteLine("|                                                                        |");
+            Console.WriteLine("| 1) Oddaj produkt                                                       |");
+            Console.WriteLine("| 2) Odbierz produkt                                                     |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.Write("| Wybór: ");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    GiveProduct(o_Lokalizacja);
+                    break;
+                case "2":
+                    TakeProduct(o_Lokalizacja);
+                    break;
+                default:
+                    HelperClasses.ZlyWybor();
+                    GiveOrGetProductMenu(o_Lokalizacja);
+                    break;
+            }
+        }
+
+        // WYBÓR WOLNEJ SKRYTKI W LOKALIZACJI
+        private static void GiveProduct(Lokalizacja o_Lokalizacja)
+        {
+            Console.Clear();
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine($"LOKALIZACJA: {o_Lokalizacja.Nazwa}");
+            Console.WriteLine("---> WYBÓR SKRTYKI");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("| Wybierz skrytkę, w której chcesz umieścić produkt.                     |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+
+
+            Skrytka o_Skrytka = Skrytka.WybierzSkrytke(o_Lokalizacja);
+
+            if (o_Skrytka == null)
+            {
+                Console.WriteLine("+------------------------------------------------------------------------+");
+                Console.WriteLine("| Wybrano błędną skrytkę. Spróbuj ponownie.                              |");
+                Console.WriteLine("+------------------------------------------------------------------------+");
+                HelperClasses.PressEnterToContinue();
+                GiveProduct(o_Lokalizacja);
+            }
+
+            Console.Clear();
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine($"LOKALIZACJA: {o_Lokalizacja.Nazwa}");
+            Console.WriteLine("---> WYBÓR SKRTYKI");
+            Console.WriteLine("------> DODAWANIE PRODUKTU");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("| Wprowadź informacje o umieszczanym produkcie.                          |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+
+            Produkt.DodajProduktDoSkrytki(o_Skrytka);
+
+            HelperClasses.PressEnterToContinue();
+            NormalUserMenu();
+        }
+
+        private static void TakeProduct(Lokalizacja o_Lokalizacja)
+        {
+            Console.Clear();
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine($"LOKALIZACJA: {o_Lokalizacja.Nazwa}");
+            Console.WriteLine("---> WYBÓR SKRTYKI");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("| Wybierz skrytkę z której chcesz wyciągnąć produkt.                     |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+
+            Skrytka o_Skrytka = Skrytka.WybierzZajetaSkrytke(o_Lokalizacja);
+
+            if (o_Skrytka == null)
+            {
+                Console.WriteLine();
+                Console.WriteLine("+------------------------------------------------------------------------+");
+                Console.WriteLine("| BRAK SKRYTEK DO WYBORU.                                                |");
+                Console.WriteLine("+------------------------------------------------------------------------+");
+
+                HelperClasses.PressEnterToContinue();
+                NormalUserMenu();
+            }
+
+            Console.Clear();
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine($"LOKALIZACJA: {o_Lokalizacja.Nazwa}");
+            Console.WriteLine("---> WYBÓR SKRTYKI");
+            Console.WriteLine("------> PRODUKT");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("| Informacje o produkcie.                                                |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+
+            Produkt o_Produkt = Skrytka.ZawartoscSkrytki(o_Skrytka);
+            Console.WriteLine($"| Nazwa: {o_Produkt.Nazwa}");
+            Console.WriteLine($"| Ilość: {o_Produkt.Ilosc}");
+            Console.WriteLine($"| Waga: {o_Produkt.Waga}");
+            Console.WriteLine($"| Termin ważności: {o_Produkt.TerminWaznosci}");
+
+            Console.Write("| Czy chcesz wyjąć ten produkt? (T/N): ");
+
+            switch (Console.ReadLine())
+            {
+                case "T":
+                    break;
+                case "N":
+                    TakeProduct(o_Lokalizacja);
+                    break;
+            }
+
+            Console.Clear();
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine($"LOKALIZACJA: {o_Lokalizacja.Nazwa}");
+            Console.WriteLine("---> WYBÓR SKRTYKI");
+            Console.WriteLine("------> WYCIĄGANIE PRODUKTU");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("| Potwierdź wyjęcie produktu.                                            |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+
+            Produkt.UsunProduktZeSkrytki(o_Skrytka);
+
+            HelperClasses.PressEnterToContinue();
+            NormalUserMenu();
+        }
+
+        // USTAWIENIA KONTA UŻYTKOWNIKA
+        private static void UserSettings()
+        {
+            Console.Clear();
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                      ## InFood - jedzeniomaty ##                       |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("|                           USTAWIENIA KONTA                             |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.WriteLine("| 1) Zmiana danych konta                                                 |");
+            Console.WriteLine("| 2) Powrót do menu użytkownika                                          |");
+            Console.WriteLine("| 3) Wyjście z aplikacji                                                 |");
+            Console.WriteLine("+------------------------------------------------------------------------+");
+            Console.Write("| Wybór: ");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    Uzytkownik.ModyfikujUzytkownika(LOGGED_USER_LOGIN);
+                    break;
+                case "2":
+                    NormalUserMenu();
+                    break;
+                case "3":
+                    Environment.Exit(0);
+                    break;
+                default:
+                    HelperClasses.ZlyWybor();
+                    UserSettings();
+                    break;
+            }
+        }
+    }
 }

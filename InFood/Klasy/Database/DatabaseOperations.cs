@@ -6,11 +6,13 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 using InFood.Klasy.Exceptions;
+using InFood.Klasy.Menu;
 
 namespace InFood.Klasy.Database
 {
     class DatabaseOperations
     {
+        public static int? LAST_INSERTED_ID;
         /*
          * POLECENIE SELECT
          */
@@ -35,7 +37,7 @@ namespace InFood.Klasy.Database
         /*
          * POLECENIE SELECT WHERE ...
          */
-        public static DataTable SelectWithParams(string queryString, Dictionary<string, string> parameters)
+        public static DataTable SelectWithParams(string queryString, Dictionary<string, object> parameters)
         {
             string connectionString = DatabaseConnection.GetConnectionString();
 
@@ -45,7 +47,7 @@ namespace InFood.Klasy.Database
 
                 command.Parameters.Clear();
 
-                foreach (KeyValuePair<string, string> param in parameters)
+                foreach (KeyValuePair<string, object> param in parameters)
                 {
                     command.Parameters.AddWithValue(param.Key, param.Value);
                 }
@@ -71,7 +73,7 @@ namespace InFood.Klasy.Database
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlCommand command = new SqlCommand(queryString + "SELECT CAST(scope_identity() AS int)", connection);
 
                 command.Parameters.Clear();
 
@@ -84,9 +86,10 @@ namespace InFood.Klasy.Database
 
                 try
                 {
-                    var rowsUpdated = command.ExecuteNonQuery();
-                    if (rowsUpdated >= 1)
+                    LAST_INSERTED_ID = (Int32?)command.ExecuteScalar();
+                    if (LAST_INSERTED_ID != null)
                     {
+
                         Console.WriteLine("Pomyślnie dodano do bazy.");
                     }
                 }
@@ -95,6 +98,8 @@ namespace InFood.Klasy.Database
                     if (ex.Number == 2601) // jeśli kod błędu 2601 (duplikat wartości)
                     {
                         Console.WriteLine(new CannotInsertDuplicateKeyRow().Message);
+                        HelperClasses.PressEnterToContinue();
+                        Program.EntryMenu();
                     }
                     else
                     {
